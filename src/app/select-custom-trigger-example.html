@@ -1,0 +1,44 @@
+<mat-form-field appearance="fill">
+  <mat-label>Toppings</mat-label>
+  <mat-select [formControl]="toppings" multiple>
+    <mat-select-trigger>
+      {{toppings.value ? toppings.value[0] : ''}}
+      <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+        (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+      </span>
+    </mat-select-trigger>
+    <div >
+      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+    </div>
+  </mat-select>
+</mat-form-field>
+
+<button mat-fab color="warm" (click)="eliminaRegistro()" >
+    <mat-icon>delete</mat-icon>
+</button>
+<div *ngIf="disabledButton()" [formGroup]="registroGroup">
+  <mat-form-field appearance='fill'>
+    <mat-label>Nombre: </mat-label>
+    <input matInput type="text" formControlName="nombreControl">
+  </mat-form-field>
+  <mat-error *ngIf="isControlHasError('nombreControl','required')">
+    El campo es requerido
+  </mat-error>
+  <mat-error *ngIf="isControlHasError('nombreControl','minlength')">
+    Debe tener mas de 3 caracteres
+  </mat-error>
+  <mat-error *ngIf="isControlHasError('nombreControl','maxlength')">
+    Debe tener menos de 64 caracteres
+  </mat-error>
+  <mat-error *ngIf="isControlHasError('nombreControl','pattern')">
+    Debe contener solo caraceres
+  </mat-error>
+  <button mat-fab color="primary" (click)="agregarRegistro()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+
+<!-- Copyright 2020 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
